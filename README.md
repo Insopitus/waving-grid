@@ -1,2 +1,2 @@
 # waving-grid
-a waving grid w/ three.js and perlin noise
+a simple waving grid scene w/ three.js and perlin noise
