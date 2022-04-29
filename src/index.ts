@@ -1,6 +1,8 @@
-import { AmbientLight, AxesHelper, DirectionalLight, Mesh, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, WebGLRenderer } from 'three'
+import { AmbientLight, AxesHelper, Color, DirectionalLight, Mesh, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, WebGLRenderer } from 'three'
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls'
+// @ts-expect-error
 import fsSource from '/src/wave.frag?raw'
+// @ts-expect-error
 import vsSource from '/src/wave.vert?raw'
 const scene = new Scene()
 const renderer = new WebGLRenderer({ antialias: true })
@@ -26,9 +28,13 @@ renderer.render(scene, camera)
 
 
 const geometry = new PlaneGeometry(100,100,100,100)
+const beginTime = Date.now()
 const uniforms = {
     time:{
-        value:Date.now()
+        value:beginTime
+    },
+    color:{
+        value:new Color('dodgerblue')
     }
 }
 const material = new ShaderMaterial({fragmentShader:fsSource,vertexShader:vsSource,wireframe:true,uniforms})
@@ -43,8 +49,10 @@ function animate(deltaTime:number) {
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
     controls.update()
-    material.uniforms.time.value = Date.now()
-    material.needsUpdate = true
+    material.uniforms.time.value = Date.now() - beginTime
+    // material.uniforms.color.value = new Color(Math.random(),Math.random(),Math.random())
+    // material.needsUpdate = true
+    // console.log(material.uniforms.time.value)
    
 }
 
