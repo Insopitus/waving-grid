@@ -1,9 +1,9 @@
 import { AmbientLight, AxesHelper, Color, DirectionalLight, Mesh, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, WebGLRenderer } from 'three'
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls'
-// @ts-expect-error
+
 import fsSource from '/src/wave.frag?raw'
-// @ts-expect-error
 import vsSource from '/src/wave.vert?raw'
+
 const scene = new Scene()
 const renderer = new WebGLRenderer({ antialias: true })
 const dom: HTMLElement = document.querySelector('#container')
