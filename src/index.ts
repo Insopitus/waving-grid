@@ -5,7 +5,7 @@ import fsSource from '/src/shaders/wave.frag?raw'
 import vsSource from '/src/shaders/wave.vert?raw'
 
 const scene = new Scene()
-scene.fog = new Fog(0x000000,5,45)
+scene.fog = new FogExp2(0x000000,.06)
 const renderer = new WebGLRenderer({ antialias: true })
 const dom: HTMLElement = document.querySelector('#container')
 dom.appendChild(renderer.domElement)
@@ -40,12 +40,9 @@ const uniforms = {
     fogColor:{
         value:new Color(0x000000)
     },
-    fogNear:{
-        value:10
+    fogDensity:{
+        value:.3
     },
-    fogFar:{
-        value:80
-    }
 }
 const material = new ShaderMaterial({fragmentShader:fsSource,vertexShader:vsSource,wireframe:true,uniforms,fog:true})
 const mesh = new Mesh(geometry,material)
