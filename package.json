@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "build":"vite build"
+    "build": "vite build"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,6 @@
     "vite": "^2.9.6"
   },
   "dependencies": {
-    "three": "^0.139.2"
+    "three": "^0.140.2"
   }
 }

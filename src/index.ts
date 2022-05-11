@@ -1,10 +1,11 @@
-import { AmbientLight, AxesHelper, Color, DirectionalLight, Mesh, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, WebGLRenderer } from 'three'
+import { AmbientLight, AxesHelper, Color, DirectionalLight, Fog, FogExp2, Mesh, MeshLambertMaterial, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, WebGLRenderer } from 'three'
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls'
 
-import fsSource from '/src/wave.frag?raw'
-import vsSource from '/src/wave.vert?raw'
+import fsSource from '/src/shaders/wave.frag?raw'
+import vsSource from '/src/shaders/wave.vert?raw'
 
 const scene = new Scene()
+scene.fog = new Fog(0x000000,5,45)
 const renderer = new WebGLRenderer({ antialias: true })
 const dom: HTMLElement = document.querySelector('#container')
 dom.appendChild(renderer.domElement)
@@ -21,8 +22,8 @@ camera.position.set(5, 3, 5)
 camera.lookAt(0, 0, 0)
 const controls = new MapControls(camera, renderer.domElement)
 
-const axes = new AxesHelper(10000)
-scene.add(ambientLight, directionalLight, axes)
+// const axes = new AxesHelper(10000)
+scene.add(ambientLight, directionalLight,)
 renderer.render(scene, camera)
 
 
@@ -35,9 +36,18 @@ const uniforms = {
     },
     color:{
         value:new Color('dodgerblue')
+    },
+    fogColor:{
+        value:new Color(0x000000)
+    },
+    fogNear:{
+        value:10
+    },
+    fogFar:{
+        value:80
     }
 }
-const material = new ShaderMaterial({fragmentShader:fsSource,vertexShader:vsSource,wireframe:true,uniforms})
+const material = new ShaderMaterial({fragmentShader:fsSource,vertexShader:vsSource,wireframe:true,uniforms,fog:true})
 const mesh = new Mesh(geometry,material)
 mesh.rotateX(-Math.PI/2)
 scene.add(mesh)

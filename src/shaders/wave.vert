@@ -1,4 +1,8 @@
 uniform float time;
+varying float depth;
+// attribute vec3 position;
+// uniform mat4 modelViewMatrix;
+// uniform mat4 projectionMatrix;
 vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
 vec3 fade(vec3 t) {return t*t*t*(t*(t*6.0-15.0)+10.0);}
@@ -72,6 +76,8 @@ float cnoise(vec3 P){
 }
 void main(){
     vec4 pos = vec4(position,1.0);
-    pos.z = cnoise(vec3(pos.xy*0.1,time*0.0001));
-    gl_Position = projectionMatrix * modelViewMatrix * pos;
+    pos.z = 1.2*cnoise(vec3(pos.xy*0.12,time*0.0003));
+    vec4 viewPos = modelViewMatrix * pos;
+    depth = -viewPos.z;
+    gl_Position = projectionMatrix * viewPos;
 }
