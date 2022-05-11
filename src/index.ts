@@ -3,9 +3,9 @@ import { MapControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import fsSource from '/src/shaders/wave.frag?raw'
 import vsSource from '/src/shaders/wave.vert?raw'
-
+const BACKGROUND_COLOR = 0x0
 const scene = new Scene()
-scene.fog = new FogExp2(0x000000,.06)
+scene.fog = new FogExp2(BACKGROUND_COLOR,.06)
 const renderer = new WebGLRenderer({ antialias: true })
 const dom: HTMLElement = document.querySelector('#container')
 dom.appendChild(renderer.domElement)
@@ -38,7 +38,7 @@ const uniforms = {
         value:new Color('dodgerblue')
     },
     fogColor:{
-        value:new Color(0x000000)
+        value:new Color(BACKGROUND_COLOR)
     },
     fogDensity:{
         value:.3
