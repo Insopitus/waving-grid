@@ -76,7 +76,7 @@ float cnoise(vec3 P){
 }
 void main(){
     vec4 pos = vec4(position,1.0);
-    pos.z = 1.2*cnoise(vec3(pos.xy*0.12,time*0.0003));
+    // pos.z = 1.2*cnoise(vec3(pos.xy*0.12,time*0.0003));
     vec4 viewPos = modelViewMatrix * pos;
     depth = -viewPos.z;
     gl_Position = projectionMatrix * viewPos;
