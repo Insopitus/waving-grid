@@ -52,11 +52,13 @@ const uniforms = {
         value:.3
     },
 }
-
+const SEGMENTS = 100
+const SIZE = 100
 // const geometry = new PlaneGeometry(100,100,100,100)
-const geometry = generateGridGeometry(2,2,1,1)
+const geometry = generateGridGeometry(SIZE,SIZE,SEGMENTS,SEGMENTS)
+geometry.translate(-SIZE/2,-SIZE/2,0)
 
-const material = new ShaderMaterial({fragmentShader:fsSource,vertexShader:vsSource,wireframe:true,uniforms,fog:true})
+const material = new ShaderMaterial({fragmentShader:fsSource,vertexShader:vsSource,uniforms,fog:true})
 // const material = new LineBasicMaterial({color:'red'})
 const mesh = new LineSegments(geometry,material)
 mesh.rotateX(-Math.PI/2)
