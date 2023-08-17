@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "deploy": "git push origin `git subtree split --prefix dist master`:gh-pages --force"
   },
   "repository": {
     "type": "git",
@@ -19,12 +20,10 @@
   },
   "homepage": "https://github.com/Insopitus/waving-grid#readme",
   "devDependencies": {
-    "@types/three": "^0.139.0",
-    "@yushijinhun/three-minifier-rollup": "^0.3.1",
-    "rollup-plugin-visualizer": "^5.6.0",
+    "@types/ogl": "npm:ogl-types@^0.0.102",
     "vite": "^2.9.6"
   },
   "dependencies": {
-    "three": "^0.140.2"
+    "ogl": "^1.0.0"
   }
 }

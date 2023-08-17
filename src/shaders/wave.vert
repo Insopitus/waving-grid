@@ -1,13 +1,19 @@
 uniform float time;
 varying float depth;
-// attribute vec3 position;
-// uniform mat4 modelViewMatrix;
-// uniform mat4 projectionMatrix;
-vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
-vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
-vec3 fade(vec3 t) {return t*t*t*(t*(t*6.0-15.0)+10.0);}
+attribute vec3 position;
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+vec4 permute(vec4 x) {
+  return mod(((x * 34.0) + 1.0) * x, 289.0);
+}
+vec4 taylorInvSqrt(vec4 r) {
+  return 1.79284291400159 - 0.85373472095314 * r;
+}
+vec3 fade(vec3 t) {
+  return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
+}
 
-float cnoise(vec3 P){
+float cnoise(vec3 P) {
   vec3 Pi0 = floor(P); // Integer part for indexing
   vec3 Pi1 = Pi0 + vec3(1.0); // Integer part + 1
   Pi0 = mod(Pi0, 289.0);
@@ -39,14 +45,14 @@ float cnoise(vec3 P){
   gx1 -= sz1 * (step(0.0, gx1) - 0.5);
   gy1 -= sz1 * (step(0.0, gy1) - 0.5);
 
-  vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
-  vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
-  vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
-  vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
-  vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
-  vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
-  vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
-  vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+  vec3 g000 = vec3(gx0.x, gy0.x, gz0.x);
+  vec3 g100 = vec3(gx0.y, gy0.y, gz0.y);
+  vec3 g010 = vec3(gx0.z, gy0.z, gz0.z);
+  vec3 g110 = vec3(gx0.w, gy0.w, gz0.w);
+  vec3 g001 = vec3(gx1.x, gy1.x, gz1.x);
+  vec3 g101 = vec3(gx1.y, gy1.y, gz1.y);
+  vec3 g011 = vec3(gx1.z, gy1.z, gz1.z);
+  vec3 g111 = vec3(gx1.w, gy1.w, gz1.w);
 
   vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
   g000 *= norm0.x;
@@ -71,13 +77,13 @@ float cnoise(vec3 P){
   vec3 fade_xyz = fade(Pf0);
   vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
   vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
-  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
+  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
   return 2.2 * n_xyz;
 }
-void main(){
-    vec4 pos = vec4(position,1.0);
-    pos.z = 1.2*cnoise(vec3(pos.xy*0.12,time*0.0003));
-    vec4 viewPos = modelViewMatrix * pos;
-    depth = -viewPos.z;
-    gl_Position = projectionMatrix * viewPos;
+void main() {
+  vec4 pos = vec4(position, 1.0);
+  pos.z = 1.2 * cnoise(vec3(pos.xy * 0.12, time * 0.3));
+  vec4 viewPos = modelViewMatrix * pos;
+  depth = -viewPos.z;
+  gl_Position = projectionMatrix * viewPos;
 }
