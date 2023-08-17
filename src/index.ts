@@ -1,58 +1,56 @@
 import { Renderer, Camera, Transform, Orbit, Program, Mesh, Geometry, OGLRenderingContext, Color, Vec3 } from 'ogl'
 import fsSource from '/src/shaders/wave.frag?raw'
 import vsSource from '/src/shaders/wave.vert?raw'
-{
-	const renderer = new Renderer()
-	const gl = renderer.gl
-	document.body.appendChild(gl.canvas)
+const renderer = new Renderer()
+const gl = renderer.gl
+document.body.appendChild(gl.canvas)
 
-	const camera = new Camera(gl)
-	camera.position.set(3, 1, 3)
-	camera.lookAt(new Vec3(0, 0, 0))
+const camera = new Camera(gl)
+camera.position.set(3, 1, 3)
+camera.lookAt(new Vec3(0, 0, 0))
 
-	const controls = new Orbit(camera)
+const controls = new Orbit(camera)
 
-	function resize() {
-		renderer.setSize(window.innerWidth, window.innerHeight)
-		camera.perspective({
-			aspect: gl.canvas.width / gl.canvas.height
-		})
-	}
-	window.addEventListener('resize', resize, false)
-	resize()
-
-	const scene = new Transform()
-
-	const SEGMENTS = 100
-	const SIZE = 50
-	const geometry = generateGridGeometry(gl, SIZE, SIZE, SEGMENTS, SEGMENTS)
-
-	const program = new Program(gl, {
-		vertex: vsSource,
-		fragment: fsSource,
-		uniforms: {
-			color: { value: new Color(0x1e90ff) },
-			time: { value: 0 },
-			fogColor: { value: new Color(0) },
-			fogDensity: { value: 0.05 }
-		}
+function resize() {
+	renderer.setSize(window.innerWidth, window.innerHeight)
+	camera.perspective({
+		aspect: gl.canvas.width / gl.canvas.height
 	})
-	const startTime = Date.now()
-	const mesh = new Mesh(gl, { geometry, program, mode: gl.LINES })
-	// mesh.position.set(-SIZE / 2, -SIZE / 2, 0)
-	mesh.rotation.x = -Math.PI / 2
-	mesh.setParent(scene)
+}
+window.addEventListener('resize', resize, false)
+resize()
 
-	requestAnimationFrame(update)
-	function update(t) {
-		requestAnimationFrame(update)
+const scene = new Transform()
 
-		// mesh.rotation.y -= 0.04
-		// mesh.rotation.x += 0.03
-		controls.update()
-		program.uniforms.time.value = (Date.now() - startTime) / 1000
-		renderer.render({ scene, camera })
+const SEGMENTS = 100
+const SIZE = 50
+const geometry = generateGridGeometry(gl, SIZE, SIZE, SEGMENTS, SEGMENTS)
+
+const program = new Program(gl, {
+	vertex: vsSource,
+	fragment: fsSource,
+	uniforms: {
+		color: { value: new Color(0x1e90ff) },
+		time: { value: 0 },
+		fogColor: { value: new Color(0) },
+		fogDensity: { value: 0.05 }
 	}
+})
+const startTime = Date.now()
+const mesh = new Mesh(gl, { geometry, program, mode: gl.LINES })
+// mesh.position.set(-SIZE / 2, -SIZE / 2, 0)
+mesh.rotation.x = -Math.PI / 2
+mesh.setParent(scene)
+
+requestAnimationFrame(update)
+function update(t) {
+	requestAnimationFrame(update)
+
+	// mesh.rotation.y -= 0.04
+	// mesh.rotation.x += 0.03
+	controls.update()
+	program.uniforms.time.value = (Date.now() - startTime) / 1000
+	renderer.render({ scene, camera })
 }
 function generateGridGeometry(gl: OGLRenderingContext, width: number, height: number, widthSegment: number, heightSegment: number) {
 	const tile_width = width / widthSegment
