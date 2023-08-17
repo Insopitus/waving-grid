@@ -1,6 +1,7 @@
 import { Renderer, Camera, Transform, Orbit, Program, Mesh, Geometry, OGLRenderingContext, Color, Vec3 } from 'ogl'
 import fsSource from '/src/shaders/wave.frag?raw'
 import vsSource from '/src/shaders/wave.vert?raw'
+
 const renderer = new Renderer()
 const gl = renderer.gl
 document.body.appendChild(gl.canvas)
