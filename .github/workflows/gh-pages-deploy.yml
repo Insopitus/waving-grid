@@ -17,5 +17,8 @@ jobs:
             - name: Clean install dependencies
               run: npm ci
 
+            - name: Run build script
+              run: npm run build
+
             - name: Run deploy script
-              run: npm run build; npm run deploy
+              run: npm run deploy
