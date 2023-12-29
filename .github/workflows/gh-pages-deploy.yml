@@ -1,24 +1,27 @@
-name: Deploy to github pages
+name: Deploy to GitHub Pages
+
 on:
-    push:
-        branches: [main]
+  push:
+    branches:
+      - main
+
 jobs:
-    gh-pages-deploy:
-        name: Deploying to gh-pages
-        runs-on: ubuntu-latest
-        steps:
-            - name: Setup Node.js for use with actions
-              uses: actions/setup-node@v2
-              with:
-                  node-version: 18.x
-            - name: Checkout branch
-              uses: actions/checkout@v2
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-            - name: Clean install dependencies
-              run: npm ci
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-            - name: Run build script
-              run: npm run build
+    - name: Install dependencies
+      run: npm install
 
-            - name: Run deploy script
-              run: npm run deploy
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.7
+      with:
+        branch: gh-pages
+        folder: dist
+        token: ${{ secrets.GITHUB_TOKEN }}
