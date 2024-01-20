@@ -14,8 +14,8 @@ devDependencies:
     specifier: npm:ogl-types@^0.0.102
     version: registry.npmmirror.com/ogl-types@0.0.102
   vite:
-    specifier: ^2.9.6
-    version: 2.9.9
+    specifier: ^2.9.17
+    version: 2.9.17
 
 packages:
 
@@ -302,8 +302,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /vite@2.9.9:
-    resolution: {integrity: sha512-ffaam+NgHfbEmfw/Vuh6BHKKlI/XIAhxE5QSS7gFLIngxg171mg1P3a4LSRME0z2ZU1ScxoKzphkipcYwSD5Ew==}
+  /vite@2.9.17:
+    resolution: {integrity: sha512-XxcRzra6d7xrKXH66jZUgb+srThoPu+TLJc06GifUyKq9JmjHkc1Numc8ra0h56rju2jfVWw3B3fs5l3OFMvUw==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:
