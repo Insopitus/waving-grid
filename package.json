@@ -21,7 +21,7 @@
   "homepage": "https://github.com/Insopitus/waving-grid#readme",
   "devDependencies": {
     "@types/ogl": "npm:ogl-types@^0.0.102",
-    "vite": "^2.9.18"
+    "vite": "^3.2.11"
   },
   "dependencies": {
     "ogl": "^1.0.0"
